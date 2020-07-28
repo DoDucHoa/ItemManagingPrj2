@@ -5,8 +5,7 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 
 public class Items extends Vector<Item>{
-    final int SUPPLYING = 1;
-    final int NOTSUPPLYING = 2;
+
 
     public Items() {
     }
@@ -24,28 +23,21 @@ public class Items extends Vector<Item>{
         return i < 0 ? null : this.get(i);
     }
     
-    public void loadFromDB(ItemDBAccess dBObj, Suppliers suppliers, int supply){
-        String itemCode, itemName, supplierCode, unit;
+    public void loadFromDB(ItemDBAccess dBObj){
+        String itemCode, itemName, unit;
         int price; 
-        boolean supplying;
+        
         String sql = "";
-        if(supply == SUPPLYING)
-            sql = "select * from Items where supplying = true";
-        else if(supply == NOTSUPPLYING)
-            sql = "select * from Items where supplying = false";
-        else 
             sql = "select * from Items";
         try {
             ResultSet rs = dBObj.executeQuery(sql);
             while(rs.next()){
-                itemCode = rs.getString(1);
+                itemCode = rs.getString(1);   //lưu ý phần này để sửa
                 itemName = rs.getString(2);
-                supplierCode = rs.getString(3);
-                Supplier supplier = suppliers.finSupplier(supplierCode);
-                unit = rs.getString(4);
-                price = rs.getInt(5);
-                supplying = rs.getBoolean(6);
-                Item item = new Item(itemCode, itemName, supplier, unit, price, supplying);
+                unit = rs.getString(3);
+                price = rs.getInt(4);
+                
+                Item item = new Item(itemCode, itemName, unit, price);
                 this.add(item);
             }
             rs.close();

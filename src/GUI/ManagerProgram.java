@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 public class ManagerProgram extends javax.swing.JFrame {
 
     ItemDBAccess dbAccess = null;
-    Suppliers suppliers;
     Items items;
     ItemFullModel itemModel;
     boolean addNewItem = false;
@@ -22,19 +21,15 @@ public class ManagerProgram extends javax.swing.JFrame {
     public ManagerProgram() {
         initComponents();
         dbAccess = new ItemDBAccess();
-        suppliers = new Suppliers();
-        suppliers.loadFromDB(dbAccess);
         items = new Items();
-        int getAll = 3;
-        items.loadFromDB(dbAccess, suppliers, getAll);
+        items.loadFromDB(dbAccess);
         itemModel = new ItemFullModel(items);
+        txtItemCode.setEditable(false);
         setupModel();
     }
 
     private void setupModel() {
         tblItems.setModel(itemModel);
-        this.cbSuppliers.setModel(new DefaultComboBoxModel(suppliers));
-        cbSuppliers.updateUI();
     }
 
     /**
@@ -53,12 +48,8 @@ public class ManagerProgram extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        chkSupplying = new javax.swing.JCheckBox();
-        cbSuppliers = new javax.swing.JComboBox<>();
         txtItemCode = new javax.swing.JTextField();
         txtItemName = new javax.swing.JTextField();
         txtUnit = new javax.swing.JTextField();
@@ -102,15 +93,9 @@ public class ManagerProgram extends javax.swing.JFrame {
 
         jLabel3.setText("Item Name:");
 
-        jLabel4.setText("Supplier:");
-
         jLabel5.setText("Unit:");
 
         jLabel6.setText("Price:");
-
-        jLabel7.setText("Supplying:");
-
-        cbSuppliers.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -122,24 +107,18 @@ public class ManagerProgram extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(txtItemCode))
+                        .addComponent(txtItemCode, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel4)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cbSuppliers, 0, 227, Short.MAX_VALUE)
-                            .addComponent(txtItemName)
+                            .addComponent(txtItemName, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
                             .addComponent(txtUnit)
-                            .addComponent(txtPrice)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(chkSupplying)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtPrice))))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,11 +131,7 @@ public class ManagerProgram extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtItemName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(cbSuppliers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(56, 56, 56)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
@@ -164,11 +139,7 @@ public class ManagerProgram extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(chkSupplying))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         btnNew.setText("Add New");
@@ -267,11 +238,10 @@ public class ManagerProgram extends javax.swing.JFrame {
         txtItemCode.setText(item.getItemCode());
         txtItemCode.setEditable(false);
         txtItemName.setText(item.getItemName());
-        int index = suppliers.find(item.getSupplier().getSupCode());
-        cbSuppliers.setSelectedIndex(index);
+
         txtUnit.setText("" + item.getUnit());
         txtPrice.setText("" + item.getPrice());
-        chkSupplying.setSelected(item.isSupplying());
+
     }//GEN-LAST:event_tblItemsMouseClicked
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -300,51 +270,95 @@ public class ManagerProgram extends javax.swing.JFrame {
         txtItemCode.setEditable(true);
         txtItemCode.requestFocus();
         txtItemName.setText("");
-        cbSuppliers.setSelectedIndex(0);
         txtUnit.setText("");
         txtPrice.setText("");
-        chkSupplying.setSelected(true);
     }//GEN-LAST:event_btnNewActionPerformed
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
-        String itemCode = txtItemCode.getText();
-        String itemName = txtItemName.getText();
-        Supplier supplier = (Supplier) cbSuppliers.getSelectedItem();
-        String supCode = supplier.getSupCode();
-        String unit = txtUnit.getText();
-        int price = Integer.parseInt(txtPrice.getText());
-        boolean supplying = chkSupplying.isSelected();
-        Item item = new Item(itemCode, itemName, supplier, unit, price, supplying);
+    private boolean valid() {
+        String s = "";
 
-        String sql = "";
         if (addNewItem == true) {
-            sql = " Insert Into Items Values('" + itemCode + "','" + itemName + "','" + supCode + "','" + unit + "'," + price + "," + (supplying ? 1 : 0) + ")";
-        } else {
-            sql = "Update Items Set "
-                    + "itemName ='" + itemName + "',"
-                    + "supCode ='" + supCode + "',unit='" + unit
-                    + "',price =" + price + ",supplying =" + (supplying ? 1 : 0)
-                    + " Where itemCode ='" + itemCode + "'";
-        }
-        JOptionPane.showMessageDialog(this, sql);
-        String msg = "An item has been added/updated";
-        try {
-            int n = dbAccess.executeUpdate(sql);
-            if (n > 0) {
-                JOptionPane.showMessageDialog(this, msg);
-                if (addNewItem == false) {
-                    int pos = tblItems.getSelectedRow();
-                    itemModel.getItems().set(pos, item);
-                } else {
-                    itemModel.getItems().add(item);
-                }
-                tblItems.updateUI();
+            s = this.txtItemCode.getText().trim().toUpperCase();
+            this.txtItemCode.setText(s);
+            if (!s.matches("^E\\d{3}$")) {  //******************
+                JOptionPane.showMessageDialog(this, "ID format: E000"); //**************
+                txtItemCode.requestFocus();
+                return false;
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
         }
-        addNewItem = false;
+
+        //check duplicated
+        if (items.find(s) >= 0) {
+            JOptionPane.showMessageDialog(this, "ID duplicated.");
+            txtItemCode.requestFocus();
+            return false;
+        }
+
+        //check name
+        s = this.txtItemName.getText().trim();
+        if (s.length() == 0) {
+            JOptionPane.showMessageDialog(this, "Name is required.");
+            txtItemName.requestFocus();
+            return false;
+        }
+
+        //check unit
+        s = this.txtUnit.getText().trim();
+        if (s.length() == 0) {
+            JOptionPane.showMessageDialog(this, "Unit is required.");
+            txtUnit.requestFocus();
+            return false;
+        }
+
+        //check price
+        s = this.txtPrice.getText().trim();
+        if (s.length() == 0) {
+            JOptionPane.showMessageDialog(this, "Price is required.");
+            txtPrice.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:  
+        if (valid()) {
+            String itemCode = txtItemCode.getText();
+            String itemName = txtItemName.getText();
+            String unit = txtUnit.getText();
+            int price = Integer.parseInt(txtPrice.getText());
+
+            Item item = new Item(itemCode, itemName, unit, price);
+            String sql = "";
+            if (addNewItem == true) {
+                sql = " Insert Into Items Values('" + itemCode + "','" + itemName + "','" + unit + "'," + price + ")";
+            } else {
+                sql = "Update Items Set "
+                        + "itemName ='" + itemName + "'"
+                        + ",unit='" + unit  + "',"
+                        + "price = '" + price  + "'"
+                        + " Where itemCode ='" + itemCode + "'";
+            }
+            JOptionPane.showMessageDialog(this, sql);
+            String msg = "An item has been added/updated";
+            try {
+                int n = dbAccess.executeUpdate(sql);
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(this, msg);
+                    if (addNewItem == false) {
+                        int pos = tblItems.getSelectedRow();
+                        itemModel.getItems().set(pos, item);
+                    } else {
+                        itemModel.getItems().add(item);
+                    }
+                    tblItems.updateUI();
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e);
+            }
+            addNewItem = false;
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     /**
@@ -386,15 +400,11 @@ public class ManagerProgram extends javax.swing.JFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnSave;
-    private javax.swing.JComboBox<String> cbSuppliers;
-    private javax.swing.JCheckBox chkSupplying;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

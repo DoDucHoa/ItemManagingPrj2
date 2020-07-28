@@ -20,7 +20,7 @@ public class ItemFullModel extends AbstractTableModel {
     }
 
     public int getColumnCount() {
-        return 6;
+        return 4;
     }
 
     @Override
@@ -33,18 +33,14 @@ public class ItemFullModel extends AbstractTableModel {
             case 1:
                 columnName = "Name";
                 break;
+            
             case 2:
-                columnName = "Supplier";
-                break;
-            case 3:
                 columnName = "Unit";
                 break;
-            case 4:
+            case 3:
                 columnName = "Price";
                 break;
-            case 5:
-                columnName = "Supply";
-                break;
+            
         }
         return columnName;
     }
@@ -60,18 +56,14 @@ public class ItemFullModel extends AbstractTableModel {
             case 1:
                 obj = item.getItemName();
                 break;
+          
             case 2:
-                obj = item.getSupplier().getSupCode();
-                break;
-            case 3:
                 obj = item.getUnit();
                 break;
-            case 4: 
+            case 3: 
                 obj = item.getPrice();
                 break;
-            case 5:
-                obj = item.isSupplying();
-                break;
+           
         }
         return obj;
     }

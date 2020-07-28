@@ -2,22 +2,19 @@ package dbo;
 
 public class Item {
     String itemCode = "", itemName = "";
-    Supplier supplier = null;
     String unit = "";
     int price = 0;
-    boolean supplying = false;
+  
 
     public Item() {
     }
     
-    public Item(String itemCode, String itemName, Supplier supplier, 
-            String unit, int price, boolean supplying){
+    public Item(String itemCode, String itemName, 
+            String unit, int price){
         this.itemCode = itemCode;
         this.itemName = itemName;
-        this.supplier = supplier;
         this.unit = unit;
         this.price = price;
-        this.supplying = supplying;
     }
 
     public String getItemCode() {
@@ -35,15 +32,7 @@ public class Item {
     public void setItemName(String itemName) {
         this.itemName = itemName;
     }
-
-    public Supplier getSupplier() {
-        return supplier;
-    }
-
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
-    }
-
+    
     public String getUnit() {
         return unit;
     }
@@ -59,13 +48,4 @@ public class Item {
     public void setPrice(int price) {
         this.price = price;
     }
-
-    public boolean isSupplying() {
-        return supplying;
-    }
-
-    public void setSupplying(boolean supplying) {
-        this.supplying = supplying;
-    }
-    
 }
